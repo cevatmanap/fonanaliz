@@ -1,0 +1,4 @@
+DB_FILE: "../market-sqlite.db"
+OLDEST: "2022-09-01"
+server_hostname: localhost
+server_port: 5000
