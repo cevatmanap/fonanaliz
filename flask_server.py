@@ -3,9 +3,13 @@ import json, yaml
 import seaborn
 import matplotlib.pyplot as plt
 import io, base64
+import os
 
 from flask import Flask, jsonify, request
-config = yaml.load(open("config.yaml"), Loader=yaml.FullLoader)
+dir_path = os.path.dirname(os.path.abspath(__file__))
+conf_path = os.path.join(dir_path, "config.yaml")
+config = yaml.safe_load(open(conf_path, "r"))
+
 print(config)
 
 

@@ -2,6 +2,7 @@ import fon_query
 import datetime
 
 import seaborn
+import pandas as pd
 import matplotlib.pyplot as plt
 
 conn = fon_query.connect_db()
@@ -23,14 +24,30 @@ conn = fon_query.connect_db()
 #    print(s["code"][i], s["change"][i])
 #print(s)
 
-s = fon_query.get_foncodes_with_keyword_in_fontitle(conn, "gümüş")
+#s = fon_query.get_foncodes_with_keyword_in_fontitle(conn, "gümüş")
 
-for c in s:
-    r = fon_query.get_prices_between_dates(conn, c, "2022-10-01", "2022-11-25", normalize=True)
-    seaborn.lineplot(data=r, x="date", y="price", label=r["code"][0])
+#for c in s:
+#    r = fon_query.get_prices_between_dates(conn, c, "2022-10-01", "2022-11-25", normalize=True)
+#    seaborn.lineplot(data=r, x="date", y="price", label=r["code"][0])
 
-plt.show()
+#plt.show()
+
+
 #for f in s:
 #    d = fon_query.get_prices_df(conn, f)
 #    print(d)
 #    fon_query.plot_prices(conn, [f])
+
+
+keywords = ["gümüş", "altın", "EMTİA", "alternat", "eurobond", "HİSSE"]
+vade = [7,30,60,90,120,180]
+
+for s in keywords:
+    f = fon_query.get_foncodes_with_keyword_in_fontitle(conn, s)
+    res = []
+    print(s, f)
+    for v in vade:
+        c = fon_query.get_change(conn, f, v)
+        res.append(c.mean().values[0])
+
+    print(s, res)
